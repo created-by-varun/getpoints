@@ -11,11 +11,17 @@ pub fn get_points(grid_count: i32, grid_line_length: f64) -> String {
         points.push((x, y));
     }
 
-    let points_str = points
-        .iter()
-        .map(|(x, y)| format!("({},{})", x, y))
-        .collect::<Vec<String>>()
-        .join(",");
+    let mut buf = String::with_capacity(points.len() * 8 + 2);
+    buf.push('[');
 
-    format!("[{}]", points_str)
+    for (i, (x, y)) in points.iter().enumerate() {
+        write!(buf, "({:.6},{:.6})", x, y).unwrap();
+
+        if i < points.len() - 1 {
+            buf.push(',');
+        }
+    }
+
+    buf.push(']');
+    buf
 }
