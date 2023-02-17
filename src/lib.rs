@@ -2,9 +2,16 @@ use std::fmt::Write;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn get_points(grid_count: i32, grid_line_length: f64) -> String {
+pub fn get_points( line_length: f64, scale: i32, gap: i32) -> String {
     // Calculate the gap between each point in the grid
-    let gap = grid_line_length / (grid_count as f64);
+    //let gap = grid_line_length / (grid_count as f64);
+    let grid_line_length = line_length/ scale;
+    let grid_count = grid_line_length/gap;
+
+    if scale< 0.6 {
+        gap = 80;
+        grid_count = grid_line_length/ gap;
+    }
 
     // Create a vector to store the points in
     let mut points = Vec::with_capacity((grid_count * grid_count) as usize);
